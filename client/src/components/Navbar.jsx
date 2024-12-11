@@ -1,13 +1,25 @@
-import React, { useState } from "react";
-import Login from "./Login";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    setIsLoggedIn(!!token);
+  }, []);
 
   const handleLoginClick = () => {
     navigate("/login");
+  };
+
+  const handleLogoutClick = () => {
+    Cookies.remove("token");
+    setIsLoggedIn(false);
+    navigate("/");
   };
 
   const toggleMenu = () => {
@@ -46,25 +58,34 @@ const Navbar = () => {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <a href="#home" className="hover:text-gray-300 text-lg">
+          <Link to="/home" className="hover:text-gray-300 text-lg">
             Home
-          </a>
-          <a href="#income" className="hover:text-gray-300 text-lg">
+          </Link>
+          <Link to="/income" className="hover:text-gray-300 text-lg">
             Income
-          </a>
-          <a href="#expense" className="hover:text-gray-300 text-lg">
+          </Link>
+          <Link to="/expense" className="hover:text-gray-300 text-lg">
             Expense
-          </a>
+          </Link>
         </div>
 
         {/* Login Button */}
         <div>
-          <button
-            onClick={handleLoginClick}
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded"
-          >
-            Login
-          </button>
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogoutClick}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={handleLoginClick}
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded"
+            >
+              Login
+            </button>
+          )}
         </div>
       </div>
 
@@ -74,15 +95,15 @@ const Navbar = () => {
           isMenuOpen ? "block" : "hidden"
         } bg-gray-800 text-white p-4 space-y-4`}
       >
-        <a href="#home" className="block hover:text-gray-300">
+        <Link to="/home" className="block hover:text-gray-300">
           Home
-        </a>
-        <a href="#income" className="block hover:text-gray-300">
+        </Link>
+        <Link to="/income" className="block hover:text-gray-300">
           Income
-        </a>
-        <a href="#expense" className="block hover:text-gray-300">
+        </Link>
+        <Link to="/expense" className="block hover:text-gray-300">
           Expense
-        </a>
+        </Link>
       </div>
     </nav>
   );
