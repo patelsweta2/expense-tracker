@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import request from "../../utils/request";
 import ENDPOINTS from "../../utils/endPoints";
+import Cookies from "js-cookie";
 
 // create Expense action
 export const createExpense = createAsyncThunk(
@@ -11,12 +12,13 @@ export const createExpense = createAsyncThunk(
         method: "POST",
         url: ENDPOINTS.ADD_EXPENSES,
         data: expenseData,
+        headers: {},
       };
       const response = await request(config);
       if (!response.success) {
         return rejectWithValue(response.data);
       }
-      return response.data; // Return the created expense data
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -31,6 +33,7 @@ export const getAllExpenses = createAsyncThunk(
       const config = {
         method: "GET",
         url: ENDPOINTS.GET_ALL_EXPENSES,
+        headers: {},
       };
       const response = await request(config);
       if (!response.success) {
@@ -50,7 +53,8 @@ export const getOneExpense = createAsyncThunk(
     try {
       const config = {
         method: "GET",
-        url: `${ENDPOINTS.GET_ONE_EXPENSE}/${expenseId}`, // Ensure that expenseId is appended to the URL
+        url: `${ENDPOINTS.GET_ONE_EXPENSE}/${expenseId}`,
+        headers: {},
       };
       const response = await request(config);
       if (!response.success) {
@@ -72,6 +76,7 @@ export const updateExpense = createAsyncThunk(
         method: "PUT",
         url: `${ENDPOINTS.UPDATE_EXPENSE}/${expenseId}`, // Ensure expenseId is in the URL
         data: expenseData,
+        headers: {},
       };
       const response = await request(config);
       if (!response.success) {
@@ -91,7 +96,8 @@ export const deleteExpense = createAsyncThunk(
     try {
       const config = {
         method: "DELETE",
-        url: `${ENDPOINTS.DELETE_EXPENSE}/${expenseId}`, // Ensure expenseId is in the URL
+        url: `${ENDPOINTS.DELETE_EXPENSE}/${expenseId}`,
+        headers: {},
       };
       const response = await request(config);
       if (!response.success) {
@@ -128,7 +134,7 @@ const expenseSlice = createSlice({
       })
       .addCase(createExpense.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload || action.error.message;
+        state.error = action.payload ? action.payload : action.error.message;
       })
       // Get All Expenses
       .addCase(getAllExpenses.pending, (state) => {

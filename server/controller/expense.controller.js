@@ -10,7 +10,6 @@ export const createExpense = catchAsyncError(async (req, res, next) => {
   const expense = await Expense.create({
     expenseName,
     amount,
-    type,
     category,
     description,
     date,
@@ -49,11 +48,11 @@ export const getExpenseById = catchAsyncError(async (req, res, next) => {
 
 // Update an expense
 export const updateExpense = catchAsyncError(async (req, res, next) => {
-  const { expenseName, amount, type, category, description, date } = req.body;
+  const { expenseName, amount, category, description, date } = req.body;
 
   const expense = await Expense.findByIdAndUpdate(
     req.params.id,
-    { expenseName, amount, type, category, description, date },
+    { expenseName, amount, category, description, date },
     { new: true, runValidators: true }
   );
 

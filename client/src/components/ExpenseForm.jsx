@@ -3,31 +3,29 @@ import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createExpense } from "../redux/slices/expenseSlice"; // Adjust path accordingly
-import { useNavigate } from "react-router-dom";
 
 const ExpenseForm = () => {
-  const [incomeData, setIncomeData] = useState({
-    incomeName: "",
+  const [expenseData, setExpenseData] = useState({
+    expenseName: "",
     amount: "",
-    source: "",
+    category: "",
     description: "",
     date: new Date(),
   });
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.income);
+  const { loading, error } = useSelector((state) => state.expense); // Corrected the state reference
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setIncomeData((prev) => ({
+    setExpenseData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
   const handleDateChange = (date) => {
-    setIncomeData((prev) => ({
+    setExpenseData((prev) => ({
       ...prev,
       date,
     }));
@@ -36,31 +34,45 @@ const ExpenseForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Dispatch the createIncome action
-    const resultAction = await dispatch(createExpense(incomeData));
+    // Dispatch the createExpense action
+    const resultAction = await dispatch(createExpense(expenseData));
 
-    if (createIncome.fulfilled.match(resultAction)) {
+    if (createExpense.fulfilled.match(resultAction)) {
       alert("Expense added successfully!");
-      navigate("/"); // Redirect after success
+      setExpenseData({
+        expenseName: "",
+        amount: "",
+        category: "",
+        description: "",
+        date: new Date(),
+      });
     } else {
       alert(
-        "Failed to add income: " + resultAction.payload ||
-          resultAction.error.message
+        "Failed to add expense: " +
+          (resultAction.payload || resultAction.error.message)
       );
     }
   };
 
   return (
     <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-4">Add Income</h2>
-      {error && <p className="text-red-500">{error}</p>}
+      <h2 className="text-2xl font-bold mb-4">Add Expense</h2>
+      <div>
+        {error && (
+          <p className="text-red-500">
+            {typeof error === "string" ? error : JSON.stringify(error)}
+          </p>
+        )}{" "}
+      </div>
+
+      {/* Show error from expense slice */}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-sm font-medium">Income Name</label>
+          <label className="block text-sm font-medium">Expense Name</label>
           <input
             type="text"
-            name="incomeName"
-            value={incomeData.incomeName}
+            name="expenseName" // Corrected name
+            value={expenseData.expenseName} // Corrected value
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
             required
@@ -72,7 +84,7 @@ const ExpenseForm = () => {
           <input
             type="number"
             name="amount"
-            value={incomeData.amount}
+            value={expenseData.amount}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
             required
@@ -80,11 +92,11 @@ const ExpenseForm = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium">Source</label>
+          <label className="block text-sm font-medium">Category</label>
           <input
             type="text"
-            name="source"
-            value={incomeData.source}
+            name="category" // Fixed the incorrect 'source' to 'category'
+            value={expenseData.category}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
             required
@@ -95,7 +107,7 @@ const ExpenseForm = () => {
           <label className="block text-sm font-medium">Description</label>
           <textarea
             name="description"
-            value={incomeData.description}
+            value={expenseData.description}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
           ></textarea>
@@ -104,7 +116,7 @@ const ExpenseForm = () => {
         <div className="mb-4">
           <label className="block text-sm font-medium">Date</label>
           <DatePicker
-            selected={incomeData.date}
+            selected={expenseData.date}
             onChange={handleDateChange}
             className="w-full px-3 py-2 border rounded-md"
           />

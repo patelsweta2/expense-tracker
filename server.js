@@ -20,7 +20,7 @@ app.use(cookieParser());
 // body parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 
 // Santize data
 app.use(mongoSanitize()); //nosql injection atack

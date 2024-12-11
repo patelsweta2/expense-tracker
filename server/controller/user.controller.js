@@ -42,11 +42,9 @@ export const login = catchAsyncError(async (req, res, next) => {
   }
   // Generate token
   const token = await user.getJwtToken(); // Expires in 2 days```
-  res.cookie("auth_token", token, {
+  res.cookie("token", token, {
     httpOnly: true,
-    maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
-    sameSite: "strict",
-    secure: process.env.NODE_ENV === "production", // Only send over HTTPS in production
+    secure: process.env.NODE_ENV === "production",
   });
 
   res.status(200).json({

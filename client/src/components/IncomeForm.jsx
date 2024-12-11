@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import createIncome from "./../redux/slices/incomeSlice"; // Adjust path accordingly
-import { useNavigate } from "react-router-dom";
+import { createIncome } from "../redux/slices/incomeSlice"; // Adjust path accordingly
 
 const IncomeForm = () => {
   const [incomeData, setIncomeData] = useState({
@@ -15,7 +14,6 @@ const IncomeForm = () => {
   });
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.income);
 
   const handleChange = (e) => {
@@ -41,7 +39,13 @@ const IncomeForm = () => {
 
     if (createIncome.fulfilled.match(resultAction)) {
       alert("Income added successfully!");
-      navigate("/"); // Redirect after success
+      setIncomeData({
+        incomeName: "",
+        amount: "",
+        source: "",
+        description: "",
+        date: new Date(),
+      });
     } else {
       alert(
         "Failed to add income: " + resultAction.payload ||
@@ -53,7 +57,13 @@ const IncomeForm = () => {
   return (
     <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-4">Add Income</h2>
-      {error && <p className="text-red-500">{error}</p>}
+      <div>
+        {error && (
+          <p className="text-red-500">
+            {typeof error === "string" ? error : JSON.stringify(error)}
+          </p>
+        )}{" "}
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-sm font-medium">Income Name</label>

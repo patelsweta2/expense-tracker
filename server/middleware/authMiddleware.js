@@ -5,7 +5,7 @@ import User from "../schema/user.schema.js";
 
 export const authMiddleware = catchAsyncError(async (req, res, next) => {
   try {
-    const token = req.cookies.auth_token;
+    const token = req.cookies.token;
     if (!token) {
       throw new CustomError("Authentication token is missing", 401);
     }
