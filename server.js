@@ -4,7 +4,9 @@ import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
 import connectDB from "./server/config/db.js";
-// import userRouter from "./server/router/userRoutes.js";
+import userRouter from "./server/router/user.router.js";
+import incomeRouter from "./server/router/income.router.js";
+import expenseRouter from "./server/router/expense.router.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -26,7 +28,9 @@ app.use(mongoSanitize()); //nosql injection atack
 app.use(hpp());
 
 //endpoints
-// app.use("/api/users", userRouter);
+app.use("/api/users", userRouter);
+app.use("/api", incomeRouter);
+app.use("/api", expenseRouter);
 
 const PORT = process.env.PORT || 8000;
 const MODE = process.env.NODE_ENV || "production";
