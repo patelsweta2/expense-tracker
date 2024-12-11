@@ -1,7 +1,14 @@
 import React, { useState } from "react";
+import Login from "./Login";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -39,25 +46,25 @@ const Navbar = () => {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <a href="#home" className="hover:text-gray-300">
+          <a href="#home" className="hover:text-gray-300 text-lg">
             Home
           </a>
-          <a href="#income" className="hover:text-gray-300">
+          <a href="#income" className="hover:text-gray-300 text-lg">
             Income
           </a>
-          <a href="#expense" className="hover:text-gray-300">
+          <a href="#expense" className="hover:text-gray-300 text-lg">
             Expense
           </a>
         </div>
 
         {/* Login Button */}
         <div>
-          <a
-            href="#login"
+          <button
+            onClick={handleLoginClick}
             className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded"
           >
             Login
-          </a>
+          </button>
         </div>
       </div>
 

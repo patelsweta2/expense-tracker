@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -6,6 +7,7 @@ const Login = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -16,10 +18,12 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission (e.g., authenticate user)
     console.log("Login form submitted:", formData);
   };
 
+  const handleRegisterRedirect = () => {
+    navigate("/register");
+  };
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form
@@ -70,6 +74,16 @@ const Login = () => {
         >
           Login
         </button>
+        <p className="mt-4 text-center text-sm text-gray-600">
+          Don’t have an account?{" "}
+          <button
+            type="button"
+            onClick={handleRegisterRedirect}
+            className="text-green-600 hover:underline"
+          >
+            Register here
+          </button>
+        </p>
       </form>
     </div>
   );
