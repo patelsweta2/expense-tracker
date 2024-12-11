@@ -136,8 +136,9 @@ const incomeSlice = createSlice({
         state.error = null;
       })
       .addCase(getAllIncomes.fulfilled, (state, action) => {
+        console.log("Incomes Payload:", action.payload);
         state.loading = false;
-        state.incomes = action.payload;
+        state.incomes = Array.isArray(action.payload) ? action.payload : [];
       })
       .addCase(getAllIncomes.rejected, (state, action) => {
         state.loading = false;

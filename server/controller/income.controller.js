@@ -24,7 +24,7 @@ export const createIncome = catchAsyncError(async (req, res, next) => {
 
 // Get All Incomes Controller
 export const getAllIncomes = catchAsyncError(async (req, res, next) => {
-  const incomes = await Income.find();
+  const incomes = await Income.find({ userId: req.user.userId });
 
   res.status(200).json({
     success: true,
@@ -37,7 +37,7 @@ export const getIncomeById = catchAsyncError(async (req, res, next) => {
   const { id } = req.params;
 
   // Find income by ID
-  const income = await Income.findById(id);
+  const income = await Income.findOne({ _id: id, userId: req.user.userId });
 
   if (!income) {
     return next(new CustomError("Income not found with this ID", 404));

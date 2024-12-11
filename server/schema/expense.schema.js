@@ -3,6 +3,11 @@ import mongoose from "mongoose";
 // Expense Schema
 const expenseSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     expenseName: {
       type: String,
       required: [true, "Expense name is required"],

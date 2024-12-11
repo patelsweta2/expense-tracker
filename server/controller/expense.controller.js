@@ -24,7 +24,7 @@ export const createExpense = catchAsyncError(async (req, res, next) => {
 
 // Get all expenses
 export const getAllExpenses = catchAsyncError(async (req, res, next) => {
-  const expenses = await Expense.find();
+  const expenses = await Expense.find({ userId: req.user.userId });
 
   res.status(200).json({
     success: true,
@@ -34,7 +34,8 @@ export const getAllExpenses = catchAsyncError(async (req, res, next) => {
 
 // Get a single expense by ID
 export const getExpenseById = catchAsyncError(async (req, res, next) => {
-  const expense = await Expense.findById(req.params.id);
+  const { id } = req.params;
+  const expense = await Expense.findOne({ _id: id, userId: req.user.userId });
 
   if (!expense) {
     return next(new CustomError("Expense not found", 404));

@@ -34,7 +34,9 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 w-full bg-gray-800 text-white shadow-md z-10">
       <div className="max-w-screen-xl mx-auto px-4 py-2 flex items-center justify-between">
         {/* Logo */}
-        <div className="text-2xl font-semibold">Expense Tracker</div>
+        <Link to="/" className="text-2xl font-semibold cursor-pointer">
+          Expense Tracker
+        </Link>
 
         {/* Hamburger Icon (mobile view) */}
         <div className="md:hidden flex items-center">
