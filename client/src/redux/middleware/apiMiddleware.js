@@ -1,4 +1,4 @@
-import request from "../../network/request";
+import request from "./../../utils/request";
 import cookies from "js-cookie";
 
 const apiMiddleware = (store) => (next) => async (action) => {

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../redux/slices/userSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,7 +9,11 @@ const Login = () => {
     password: "",
   });
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { loading, error } = useSelector((state) => state.user);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -16,14 +22,19 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login form submitted:", formData);
+    const action = await dispatch(loginUser(formData));
+
+    if (action.type === "user/login/fulfilled") {
+      navigate("/");
+    }
   };
 
   const handleRegisterRedirect = () => {
     navigate("/register");
   };
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form
@@ -72,8 +83,11 @@ const Login = () => {
           type="submit"
           className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md focus:outline-none"
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
+
+        {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+
         <p className="mt-4 text-center text-sm text-gray-600">
           Don’t have an account?{" "}
           <button

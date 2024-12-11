@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../redux/slices/userSlice"; // Make sure to import the action
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -7,7 +9,11 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // Accessing loading and error from the Redux state
+  const { loading, error } = useSelector((state) => state.user);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,10 +27,14 @@ const Register = () => {
     navigate("/login");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission (e.g., send data to API)
-    console.log("Form submitted:", formData);
+
+    const action = await dispatch(registerUser(formData));
+
+    if (action.type === "user/register/fulfilled") {
+      navigate("/login");
+    }
   };
 
   return (
@@ -93,8 +103,9 @@ const Register = () => {
           type="submit"
           className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md focus:outline-none"
         >
-          Register
+          {loading ? "Registering..." : "Register"}
         </button>
+        {error && <p className="text-red-500 text-center mt-2">{error}</p>}
         <p className="mt-4 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <button

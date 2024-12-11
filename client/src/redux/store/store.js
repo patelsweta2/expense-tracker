@@ -12,7 +12,7 @@ const store = configureStore({
     expense: expenseSlice,
   },
   middleware: (getDefaultMiddleware) => [
-    ...getDefaultMiddleware,
+    ...getDefaultMiddleware(),
     apiMiddleware,
     toastMiddleware,
   ],

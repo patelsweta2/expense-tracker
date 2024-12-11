@@ -1,7 +1,7 @@
 import React from "react";
 
 const Expenses = () => {
-  return <div>Expenses</div>;
+  return <div className="mt-14">Expenses</div>;
 };
 
 export default Expenses;

@@ -95,12 +95,6 @@ const userSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || action.error.message;
-      })
-      // for logout
-      .addCase(logout, (state) => {
-        state.user = null;
-        state.loading = false;
-        state.error = null;
       });
   },
 });

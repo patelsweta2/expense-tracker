@@ -19,7 +19,7 @@ const Navbar = () => {
   const handleLogoutClick = () => {
     Cookies.remove("token");
     setIsLoggedIn(false);
-    navigate("/");
+    navigate("/login");
   };
 
   const toggleMenu = () => {
@@ -58,8 +58,8 @@ const Navbar = () => {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <Link to="/home" className="hover:text-gray-300 text-lg">
-            Home
+          <Link to="/dashboard" className="hover:text-gray-300 text-lg">
+            Dashboard
           </Link>
           <Link to="/income" className="hover:text-gray-300 text-lg">
             Income
@@ -96,7 +96,7 @@ const Navbar = () => {
         } bg-gray-800 text-white p-4 space-y-4`}
       >
         <Link to="/home" className="block hover:text-gray-300">
-          Home
+          Dashboard
         </Link>
         <Link to="/income" className="block hover:text-gray-300">
           Income
