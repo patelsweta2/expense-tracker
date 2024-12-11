@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/slices/userSlice";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,10 @@ const Login = () => {
     const action = await dispatch(loginUser(formData));
 
     if (action.type === "user/login/fulfilled") {
+      Cookies.set("token", action.payload.token);
       navigate("/");
+    } else {
+      alert("Invalid login credentials");
     }
   };
 

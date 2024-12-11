@@ -35,10 +35,11 @@ export const loginUser = createAsyncThunk(
         data: loginData,
       };
       const response = await request(config);
+      console.log(response.data);
       if (!response.success) {
         return rejectWithValue(response.data);
       }
-      cookies.set("token", response.data.token, { expires: 7 });
+      cookies.set("token", response.data.token);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -55,6 +56,7 @@ export const logout = () => {
 const initialState = {
   user: null,
   loading: false,
+  token: null,
   error: null,
 };
 
@@ -66,6 +68,8 @@ const userSlice = createSlice({
       state.user = null;
       state.loading = false;
       state.error = null;
+      state.token = null;
+      //   Cookies.remove("token");
     },
   },
   extraReducers: (builder) => {
@@ -91,6 +95,8 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;

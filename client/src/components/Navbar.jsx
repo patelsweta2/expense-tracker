@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const token = Cookies.get("token");
     setIsLoggedIn(!!token);
-  }, []);
+  }, [Cookies.get("token")]);
 
   const handleLoginClick = () => {
     navigate("/login");
@@ -19,6 +22,7 @@ const Navbar = () => {
   const handleLogoutClick = () => {
     Cookies.remove("token");
     setIsLoggedIn(false);
+    dispatch(logout());
     navigate("/login");
   };
 
@@ -69,7 +73,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Login Button */}
+        {/* Login/Logout Button */}
         <div>
           {isLoggedIn ? (
             <button
