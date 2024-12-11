@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import request from "../../utils/request";
 import ENDPOINTS from "../../utils/endPoints";
-import catchAsyncError from "../../../../server/middleware/catchAsyncError";
 
 //create Income action
-export const createIncome = catchAsyncError(
+export const createIncome = createAsyncThunk(
   "income/create",
   async (incomeData, { rejectWithValue }) => {
     try {
