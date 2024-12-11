@@ -1,7 +1,7 @@
 import catchAsyncError from "./catchAsyncError.js";
 import CustomError from "../utils/customError.js";
 import jwt from "jsonwebtoken";
-import User from "../models/userModel.js";
+import User from "../schema/user.schema.js";
 
 export const authMiddleware = catchAsyncError(async (req, res, next) => {
   try {
