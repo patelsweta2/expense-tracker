@@ -59,7 +59,8 @@ The following endpoints are available in the application:
 | Method | Endpoint                | Description            |
 |--------|-------------------------|------------------------|
 | POST   | `/api/users/register`   | Register a new user    |
-| POST   | `/api/users/login`      | Login user             |
+| POST   | `/api/users/login`      | Login user             | 
+| POST   | `/api/users/logout`     | Logout user            |
 
 ---
 
