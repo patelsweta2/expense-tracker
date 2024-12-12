@@ -1,6 +1,7 @@
 # Income and Expense Tracker
 
 A full-stack application to track income and expenses, visualize statistics, and manage personal finances effectively.
+- In the public folder application screen shot is added
 
 ## Features
 
