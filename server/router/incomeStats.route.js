@@ -4,5 +4,5 @@ import { authMiddleware } from "../middleware/authMiddleware";
 
 const router = express.Router();
 
-router.get("/", authMiddleware, accountStatsCtrl);
+router.get("/stats", authMiddleware, accountStatsCtrl);
 export default router;

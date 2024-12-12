@@ -13,7 +13,8 @@ const IncomeList = () => {
   return (
     <div className="max-w-4xl mx-auto p-4 bg-white shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-4">Incomes List</h2>
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-500">{JSON.stringify(error)}</p>}
+
       {loading ? (
         <p>Loading...</p>
       ) : (

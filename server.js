@@ -7,6 +7,7 @@ import connectDB from "./server/config/db.js";
 import userRouter from "./server/router/user.router.js";
 import incomeRouter from "./server/router/income.router.js";
 import expenseRouter from "./server/router/expense.router.js";
+import incomeStatsRouter from "./server/router/incomeStats.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -31,6 +32,7 @@ app.use(hpp());
 app.use("/api/users", userRouter);
 app.use("/api", incomeRouter);
 app.use("/api", expenseRouter);
+app.use("/api", incomeStatsRouter);
 
 const PORT = process.env.PORT || 8000;
 const MODE = process.env.NODE_ENV || "production";
