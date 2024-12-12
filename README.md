@@ -35,14 +35,14 @@ JWT_SECRET_TIME=<JWT Expiry Time, e.g., "7d">
 
 ### Clone the Repository
 ```
-git clone <url>
+git clone https://github.com/patelsweta2/expense-tracker.git
 cd income-expense-tracker
 ```
 
 ###  Install Dependencies
 ```
 npm install (for server side)
-cd server
+cd client
 npm install
 ```
 ###  Run the Application
