@@ -16,6 +16,7 @@ const ENDPOINTS = {
   GET_ONE_EXPENSE: `${baseUrl}/expenses`,
   UPDATE_EXPENSE: `${baseUrl}/expenses`,
   DELETE_EXPENSE: `${baseUrl}/expenses`,
+  STATS_DATA: `${baseUrl}/stats`,
 };
 
 export default ENDPOINTS;
