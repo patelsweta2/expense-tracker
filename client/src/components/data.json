@@ -1,5 +1,4 @@
-API Data:
-Stats:
+// stats
 {
   "success": true,
   "expensesStats": {
@@ -20,8 +19,9 @@ Stats:
   },
   "profit": 90800
 }
-All Expenses:
-[
+
+//  exenses
+
   {
     "_id": "675a8c43e97f2ea0198256a9",
     "userId": "675934c4e58e0bc9811bafdc",
@@ -94,9 +94,9 @@ All Expenses:
     "updatedAt": "2024-12-12T07:11:05.457Z",
     "__v": 0
   }
-]
-All Incomes:
-[
+
+// income
+
   {
     "_id": "675a8ba6e97f2ea019825690",
     "userId": "675934c4e58e0bc9811bafdc",
@@ -157,4 +157,3 @@ All Incomes:
     "updatedAt": "2024-12-12T07:09:04.216Z",
     "__v": 0
   }
-]
