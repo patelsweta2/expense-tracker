@@ -33,7 +33,7 @@ const IncomeList = () => {
             <tbody>
               {incomes?.length > 0 ? (
                 incomes.map((income) => (
-                  <tr key={income.id}>
+                  <tr key={income._id}>
                     <td className="border px-4 py-2">{income.incomeName}</td>
                     <td className="border px-4 py-2">{income.amount}</td>
                     <td className="border px-4 py-2">{income.source}</td>
