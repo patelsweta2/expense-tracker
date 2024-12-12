@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllIncomes } from "../redux/slices/incomeSlice";
-// import { Link } from "react-router-dom";
 
 const IncomeList = () => {
   const dispatch = useDispatch();
   const { incomes, loading, error } = useSelector((state) => state.income);
+
   useEffect(() => {
     dispatch(getAllIncomes());
   }, [dispatch]);
@@ -18,47 +18,49 @@ const IncomeList = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <table className="min-w-full table-auto">
-          <thead>
-            <tr>
-              <th className="border px-4 py-2">Income Name</th>
-              <th className="border px-4 py-2">Amount</th>
-              <th className="border px-4 py-2">Source</th>
-              <th className="border px-4 py-2">Description</th>
-              <th className="border px-4 py-2">Date</th>
-              <th className="border px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {incomes.length > 0 ? (
-              incomes.map((income) => (
-                <tr key={income.id}>
-                  <td className="border px-4 py-2">{income.incomeName}</td>
-                  <td className="border px-4 py-2">{income.amount}</td>
-                  <td className="border px-4 py-2">{income.source}</td>
-                  <td className="border px-4 py-2">{income.description}</td>
-                  <td className="border px-4 py-2">
-                    {new Date(income.date).toLocaleDateString()}
-                  </td>
-                  <td className="border px-4 py-2">
-                    <button className="bg-yellow-500 text-white py-1 px-3 rounded-md">
-                      Update
-                    </button>
-                    <button className="bg-red-500 text-white py-1 px-3 rounded-md ml-2">
-                      Delete
-                    </button>
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto">
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="border px-4 py-2">Income Name</th>
+                <th className="border px-4 py-2">Amount</th>
+                <th className="border px-4 py-2">Source</th>
+                <th className="border px-4 py-2">Description</th>
+                <th className="border px-4 py-2">Date</th>
+                <th className="border px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {incomes?.length > 0 ? (
+                incomes.map((income) => (
+                  <tr key={income.id}>
+                    <td className="border px-4 py-2">{income.incomeName}</td>
+                    <td className="border px-4 py-2">{income.amount}</td>
+                    <td className="border px-4 py-2">{income.source}</td>
+                    <td className="border px-4 py-2">{income.description}</td>
+                    <td className="border px-4 py-2">
+                      {new Date(income.date).toLocaleDateString()}
+                    </td>
+                    <td className="border px-4 py-2 text-center">
+                      <button className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-md mr-2 mb-2 transition duration-300">
+                        Update
+                      </button>
+                      <button className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md mb-2 transition duration-300">
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="border px-4 py-2 text-center">
+                    No incomes found
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6" className="border px-4 py-2 text-center">
-                  No incomes found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

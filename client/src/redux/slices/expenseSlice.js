@@ -142,6 +142,7 @@ const expenseSlice = createSlice({
         state.error = null;
       })
       .addCase(getAllExpenses.fulfilled, (state, action) => {
+        console.log("Expenses payload", action.payload);
         state.loading = false;
         state.expenses = action.payload; // Set the list of expenses
       })
