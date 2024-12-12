@@ -8,9 +8,10 @@ export const fetchStats = createAsyncThunk(
     try {
       const config = {
         method: "GET",
-        url: ENDPOINTS.GET_STATS,
+        url: ENDPOINTS.STATS_DATA,
         credentials: "include",
       };
+      console.log("endpoints", ENDPOINTS.STATS_DATA);
       const response = await request(config);
       if (!response.success) {
         return rejectWithValue(response.data);
@@ -41,7 +42,7 @@ const statsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchStats.fulfilled, (state, action) => {
-        console.log(action.payload);
+        console.log("action", action.payload);
         state.isLoading = false;
         state.stats = action.payload;
       })
@@ -52,4 +53,4 @@ const statsSlice = createSlice({
   },
 });
 
-export const statsReducer = statsSlice.reducer;
+export default statsSlice.reducer;

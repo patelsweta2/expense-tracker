@@ -1,0 +1,160 @@
+API Data:
+Stats:
+{
+  "success": true,
+  "expensesStats": {
+    "_id": null,
+    "averageExp": 3533.3333333333335,
+    "totalExp": 21200,
+    "minExp": 1200,
+    "maxExp": 8000,
+    "totalRecords": 6
+  },
+  "incomeStats": {
+    "_id": null,
+    "averageInc": 22400,
+    "totalInc": 112000,
+    "minInc": 10000,
+    "maxInc": 50000,
+    "totalRecords": 5
+  },
+  "profit": 90800
+}
+All Expenses:
+[
+  {
+    "_id": "675a8c43e97f2ea0198256a9",
+    "userId": "675934c4e58e0bc9811bafdc",
+    "expenseName": "Groceries",
+    "amount": 5000,
+    "category": "Food",
+    "description": "Groceries shopping for the month",
+    "date": "2024-12-03T00:00:00.000Z",
+    "createdAt": "2024-12-12T07:09:55.214Z",
+    "updatedAt": "2024-12-12T07:09:55.214Z",
+    "__v": 0
+  },
+  {
+    "_id": "675a8c4ee97f2ea0198256ac",
+    "userId": "675934c4e58e0bc9811bafdc",
+    "expenseName": "Electricity Bill",
+    "amount": 2500,
+    "category": "Utilities",
+    "description": "Electricity bill for the month of December 2024",
+    "date": "2024-12-05T00:00:00.000Z",
+    "createdAt": "2024-12-12T07:10:06.592Z",
+    "updatedAt": "2024-12-12T07:10:06.592Z",
+    "__v": 0
+  },
+  {
+    "_id": "675a8c58e97f2ea0198256af",
+    "userId": "675934c4e58e0bc9811bafdc",
+    "expenseName": "Car Maintenance",
+    "amount": 8000,
+    "category": "Transportation",
+    "description": "Oil change and car maintenance",
+    "date": "2024-12-07T00:00:00.000Z",
+    "createdAt": "2024-12-12T07:10:16.973Z",
+    "updatedAt": "2024-12-12T07:10:16.973Z",
+    "__v": 0
+  },
+  {
+    "_id": "675a8c62e97f2ea0198256b2",
+    "userId": "675934c4e58e0bc9811bafdc",
+    "expenseName": "Internet Bill",
+    "amount": 1200,
+    "category": "Utilities",
+    "description": "Monthly internet service bill",
+    "date": "2024-12-10T00:00:00.000Z",
+    "createdAt": "2024-12-12T07:10:26.409Z",
+    "updatedAt": "2024-12-12T07:10:26.409Z",
+    "__v": 0
+  },
+  {
+    "_id": "675a8c6fe97f2ea0198256b5",
+    "userId": "675934c4e58e0bc9811bafdc",
+    "expenseName": "Entertainment",
+    "amount": 3000,
+    "category": "Leisure",
+    "description": "Movies and dining out",
+    "date": "2024-12-15T00:00:00.000Z",
+    "createdAt": "2024-12-12T07:10:39.296Z",
+    "updatedAt": "2024-12-12T07:10:39.296Z",
+    "__v": 0
+  },
+  {
+    "_id": "675a8c89e97f2ea0198256ba",
+    "userId": "675934c4e58e0bc9811bafdc",
+    "expenseName": "Insurance",
+    "amount": 1500,
+    "category": "Insurance",
+    "description": "Health insurance premium for December 2024",
+    "date": "2024-12-20T00:00:00.000Z",
+    "createdAt": "2024-12-12T07:11:05.457Z",
+    "updatedAt": "2024-12-12T07:11:05.457Z",
+    "__v": 0
+  }
+]
+All Incomes:
+[
+  {
+    "_id": "675a8ba6e97f2ea019825690",
+    "userId": "675934c4e58e0bc9811bafdc",
+    "incomeName": "Salary",
+    "amount": 50000,
+    "source": "Company ABC",
+    "description": "Monthly salary for the month of December 2024",
+    "date": "2024-12-01T00:00:00.000Z",
+    "createdAt": "2024-12-12T07:07:18.838Z",
+    "updatedAt": "2024-12-12T07:07:18.838Z",
+    "__v": 0
+  },
+  {
+    "_id": "675a8be9e97f2ea01982569d",
+    "userId": "675934c4e58e0bc9811bafdc",
+    "incomeName": "Freelance Work",
+    "amount": 12000,
+    "source": "Freelancer XYZ",
+    "description": "Payment for freelance web development project",
+    "date": "2024-12-05T00:00:00.000Z",
+    "createdAt": "2024-12-12T07:08:25.775Z",
+    "updatedAt": "2024-12-12T07:08:25.775Z",
+    "__v": 0
+  },
+  {
+    "_id": "675a8bf5e97f2ea0198256a0",
+    "userId": "675934c4e58e0bc9811bafdc",
+    "incomeName": "Rental Income",
+    "amount": 15000,
+    "source": "Apartment Rental",
+    "description": "Rent for 2nd floor apartment for December 2024",
+    "date": "2024-12-01T00:00:00.000Z",
+    "createdAt": "2024-12-12T07:08:37.891Z",
+    "updatedAt": "2024-12-12T07:08:37.891Z",
+    "__v": 0
+  },
+  {
+    "_id": "675a8c01e97f2ea0198256a3",
+    "userId": "675934c4e58e0bc9811bafdc",
+    "incomeName": "Business Income",
+    "amount": 25000,
+    "source": "Online Store",
+    "description": "Monthly revenue from online store sales",
+    "date": "2024-12-10T00:00:00.000Z",
+    "createdAt": "2024-12-12T07:08:49.942Z",
+    "updatedAt": "2024-12-12T07:08:49.942Z",
+    "__v": 0
+  },
+  {
+    "_id": "675a8c10e97f2ea0198256a6",
+    "userId": "675934c4e58e0bc9811bafdc",
+    "incomeName": "Bonus",
+    "amount": 10000,
+    "source": "Company ABC",
+    "description": "Year-end performance bonus from Company ABC",
+    "date": "2024-12-25T00:00:00.000Z",
+    "createdAt": "2024-12-12T07:09:04.216Z",
+    "updatedAt": "2024-12-12T07:09:04.216Z",
+    "__v": 0
+  }
+]
