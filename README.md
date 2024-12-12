@@ -31,6 +31,7 @@ MONGO_URI=<Your MongoDB Connection String>
 PORT=<Port Number for the Server>
 JWT_SECRET_KEY=<Your JWT Secret Key>
 JWT_SECRET_TIME=<JWT Expiry Time, e.g., "7d">
+```
 
 ### Clone the Repository
 ```
