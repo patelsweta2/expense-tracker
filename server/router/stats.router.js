@@ -1,8 +1,8 @@
 import express from "express";
-import { accountStatsCtrl } from "../controller/accountStatus.js";
+import { statsCtrl } from "../controller/stats.controller.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/stats", authMiddleware, accountStatsCtrl);
+router.get("/stats", authMiddleware, statsCtrl);
 export default router;

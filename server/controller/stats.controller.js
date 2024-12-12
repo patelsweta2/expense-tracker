@@ -3,7 +3,7 @@ import Expense from "../schema/expense.schema.js";
 import Income from "../schema/income.schema.js";
 // import CustomError from "../utils/customError";
 
-export const accountStatsCtrl = catchAsyncError(async (req, res) => {
+export const statsCtrl = catchAsyncError(async (req, res) => {
   const expensesStats = await Expense.aggregate([
     { $match: { amount: { $gte: 20 }, userId: req.user.userId } }, // Filter by user
     {

@@ -7,7 +7,7 @@ import connectDB from "./server/config/db.js";
 import userRouter from "./server/router/user.router.js";
 import incomeRouter from "./server/router/income.router.js";
 import expenseRouter from "./server/router/expense.router.js";
-import incomeStatsRouter from "./server/router/incomeStats.route.js";
+import incomeStatsRouter from "./server/router/stats.router.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
