@@ -51,10 +51,18 @@ const Graph = () => {
     dispatch(getAllIncomes());
   }, [dispatch]);
 
-  if (statsLoading || expensesLoading || incomesLoading)
+  if (statsLoading || expensesLoading || incomesLoading) {
     return <p>Loading...</p>;
-  if (statsError || expensesError || incomesError)
-    return <p>Error: {statsError || expensesError || incomesError}</p>;
+  }
+
+  if (statsError || expensesError || incomesError) {
+    const errorMessage =
+      statsError?.message ||
+      expensesError?.message ||
+      incomesError?.message ||
+      "An error occurred";
+    return <p>Error: {errorMessage}</p>;
+  }
 
   // Prepare expense data for the graph
   const expenseCategories = expenses.map((expense) => expense.category);
