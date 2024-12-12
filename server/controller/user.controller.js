@@ -44,9 +44,10 @@ export const login = catchAsyncError(async (req, res, next) => {
   const token = await user.getJwtToken(); // Expires in 2 days```
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production", // Only send over HTTPS in production
   });
-
   res.status(200).json({
     success: true,
     message: "Login successful",
@@ -56,5 +57,18 @@ export const login = catchAsyncError(async (req, res, next) => {
       name: user.name,
       email: user.email,
     },
+  });
+});
+
+export const logout = catchAsyncError(async (req, res, next) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully",
   });
 });

@@ -5,6 +5,7 @@ export { baseUrl };
 const ENDPOINTS = {
   REGISTER: `${baseUrl}/users/register`,
   LOGIN: `${baseUrl}/users/login`,
+  LOGOUT: `${baseUrl}/users/logout`,
   ADD_INCOME: `${baseUrl}/incomes`,
   GET_ALL_INCOME: `${baseUrl}/incomes`,
   GET_ONE_INCOME: `${baseUrl}/incomes`,

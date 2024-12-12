@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
+import cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/slices/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const token = Cookies.get("token");
-    setIsLoggedIn(!!token);
-  }, [Cookies.get("token")]);
+  const token = cookies.get("auth_token");
 
   const handleLoginClick = () => {
     navigate("/login");
   };
 
   const handleLogoutClick = () => {
-    Cookies.remove("token");
-    setIsLoggedIn(false);
-    dispatch(logout());
-    navigate("/login");
+    dispatch(logout())
+      .unwrap()
+      .then(() => {
+        alert("Logout successful!");
+      })
+      .catch((err) => {
+        alert(`Logout failed: ${err}`);
+      });
   };
 
   const toggleMenu = () => {
@@ -77,7 +78,7 @@ const Navbar = () => {
 
         {/* Login/Logout Button */}
         <div>
-          {isLoggedIn ? (
+          {token ? (
             <button
               onClick={handleLogoutClick}
               className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded"

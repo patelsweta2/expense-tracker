@@ -11,6 +11,7 @@ export const createIncome = createAsyncThunk(
         method: "POST",
         url: ENDPOINTS.ADD_INCOME,
         data: incomeData,
+        credentials: "include",
       };
       const response = await request(config);
       if (!response.success) {
@@ -31,6 +32,7 @@ export const getAllIncomes = createAsyncThunk(
       const config = {
         method: "GET",
         url: ENDPOINTS.GET_ALL_INCOME,
+        credentials: "include",
       };
       const response = await request(config);
       if (!response.success) {
@@ -51,6 +53,7 @@ export const getOneIncome = createAsyncThunk(
       const config = {
         method: "GET",
         url: `${ENDPOINTS.GET_ONE_INCOME}/${incomeId}`,
+        credentials: "include",
       };
       const response = await request(config);
       if (!response.success) {
@@ -71,6 +74,7 @@ export const updateIncome = createAsyncThunk(
       const config = {
         method: "PUT",
         url: `${ENDPOINTS.UPDATE_INCOME}/${incomeId}`,
+        credentials: "include",
         data: incomeData,
       };
       const response = await request(config);
@@ -92,6 +96,7 @@ export const deleteIncome = createAsyncThunk(
       const config = {
         method: "DELETE",
         url: `${ENDPOINTS.DELETE_INCOME}/${incomeId}`,
+        credentials: "include",
       };
       const response = await request(config);
       if (!response.success) {

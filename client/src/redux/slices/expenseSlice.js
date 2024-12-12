@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import request from "../../utils/request";
 import ENDPOINTS from "../../utils/endPoints";
-import Cookies from "js-cookie";
+import cookies from "js-cookie";
 
 // create Expense action
 export const createExpense = createAsyncThunk(
@@ -11,8 +11,8 @@ export const createExpense = createAsyncThunk(
       const config = {
         method: "POST",
         url: ENDPOINTS.ADD_EXPENSES,
+        credentials: "include",
         data: expenseData,
-        headers: {},
       };
       const response = await request(config);
       if (!response.success) {
@@ -33,7 +33,7 @@ export const getAllExpenses = createAsyncThunk(
       const config = {
         method: "GET",
         url: ENDPOINTS.GET_ALL_EXPENSES,
-        headers: {},
+        credentials: "include",
       };
       const response = await request(config);
       if (!response.success) {
@@ -54,7 +54,7 @@ export const getOneExpense = createAsyncThunk(
       const config = {
         method: "GET",
         url: `${ENDPOINTS.GET_ONE_EXPENSE}/${expenseId}`,
-        headers: {},
+        credentials: "include",
       };
       const response = await request(config);
       if (!response.success) {
@@ -74,9 +74,9 @@ export const updateExpense = createAsyncThunk(
     try {
       const config = {
         method: "PUT",
-        url: `${ENDPOINTS.UPDATE_EXPENSE}/${expenseId}`, // Ensure expenseId is in the URL
+        url: `${ENDPOINTS.UPDATE_EXPENSE}/${expenseId}`,
+        credentials: "include",
         data: expenseData,
-        headers: {},
       };
       const response = await request(config);
       if (!response.success) {
@@ -97,7 +97,7 @@ export const deleteExpense = createAsyncThunk(
       const config = {
         method: "DELETE",
         url: `${ENDPOINTS.DELETE_EXPENSE}/${expenseId}`,
-        headers: {},
+        credentials: "include",
       };
       const response = await request(config);
       if (!response.success) {

@@ -11,6 +11,7 @@ export const registerUser = createAsyncThunk(
       const config = {
         method: "POST",
         url: ENDPOINTS.REGISTER,
+        credentials: "include",
         data: userData,
       };
       const response = await request(config);
@@ -32,14 +33,15 @@ export const loginUser = createAsyncThunk(
       const config = {
         method: "POST",
         url: ENDPOINTS.LOGIN,
+        credentials: "include",
         data: loginData,
       };
       const response = await request(config);
-      console.log(response.data);
+      console.log("login", response.data);
       if (!response.success) {
         return rejectWithValue(response.data);
       }
-      cookies.set("token", response.data.token);
+      cookies.set("auth_token", response.data.token, { path: "/" });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -48,33 +50,39 @@ export const loginUser = createAsyncThunk(
 );
 
 // Logout action
-export const logout = () => {
-  cookies.remove("token");
-  return { type: "user/logout" };
-};
-
-const initialState = {
-  user: null,
-  loading: false,
-  token: null,
-  error: null,
-};
+export const logout = createAsyncThunk(
+  "user/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const config = {
+        method: "POST",
+        url: ENDPOINTS.LOGOUT,
+        credentials: "include",
+      };
+      const response = await request(config);
+      if (!response.success) {
+        return rejectWithValue(response.message || "Logout failed");
+      }
+      cookies.remove("auth_token", { path: "/" });
+      return response.message;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 const userSlice = createSlice({
   name: "user",
-  initialState,
-  reducers: {
-    logout: (state) => {
-      state.user = null;
-      state.loading = false;
-      state.error = null;
-      state.token = null;
-      //   Cookies.remove("token");
-    },
+  initialState: {
+    user: null,
+    loading: false,
+    token: null,
+    error: null,
   },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      // for register
+      // For register
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -87,7 +95,7 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload || action.error.message;
       })
-      // for Login
+      // For login
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -99,6 +107,21 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || action.error.message;
+      })
+      // For logout
+      .addCase(logout.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.token = null;
+        state.error = null;
+      })
+      .addCase(logout.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || action.error.message;
       });

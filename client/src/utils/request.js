@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookies from "js-cookie";
+import cookies from "js-cookie";
 
 const request = async (configObj) => {
   // const token = Cookies.get("token");

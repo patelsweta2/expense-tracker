@@ -41,7 +41,7 @@ const apiMiddleware = (store) => (next) => async (action) => {
 
       // Example for token storage
       if (data.token) {
-        cookies.set("token", data.token, { expires: 7 });
+        cookies.set("auth_token", data.token, { expires: 7 });
       }
     }
 

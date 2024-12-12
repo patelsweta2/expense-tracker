@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/slices/userSlice";
-import Cookies from "js-cookie";
+import cookies from "js-cookie";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ const Login = () => {
     const action = await dispatch(loginUser(formData));
 
     if (action.type === "user/login/fulfilled") {
-      Cookies.set("token", action.payload.token);
+      cookies.set("auth_token", action.payload.token);
       navigate("/");
     } else {
       alert("Invalid login credentials");
@@ -90,7 +90,9 @@ const Login = () => {
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+        {error?.message && (
+          <p className="text-red-500 text-center mt-2">{error.message}</p>
+        )}
 
         <p className="mt-4 text-center text-sm text-gray-600">
           Don’t have an account?{" "}
