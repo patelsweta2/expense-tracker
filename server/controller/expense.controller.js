@@ -4,8 +4,8 @@ import catchAsyncError from "../middleware/catchAsyncError.js";
 
 // Create a new expense
 export const createExpense = catchAsyncError(async (req, res, next) => {
-  const { expenseName, amount, type, category, description, date } = req.body;
-
+  const { expenseName, amount, category, description, date } = req.body;
+  const userId = req.user.userId;
   // Create a new expense entry in the database
   const expense = await Expense.create({
     expenseName,
@@ -13,6 +13,7 @@ export const createExpense = catchAsyncError(async (req, res, next) => {
     category,
     description,
     date,
+    userId,
   });
 
   res.status(201).json({

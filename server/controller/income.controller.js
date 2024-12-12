@@ -6,6 +6,7 @@ import catchAsyncError from "../middleware/catchAsyncError.js";
 export const createIncome = catchAsyncError(async (req, res, next) => {
   const { incomeName, amount, source, description, date } = req.body;
 
+  const userId = req.user.userId;
   // Create a new income document
   const income = await Income.create({
     incomeName,
@@ -13,6 +14,7 @@ export const createIncome = catchAsyncError(async (req, res, next) => {
     source,
     description,
     date,
+    userId,
   });
 
   res.status(201).json({
