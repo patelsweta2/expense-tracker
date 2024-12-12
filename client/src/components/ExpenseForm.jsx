@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { createExpense } from "../redux/slices/expenseSlice"; // Adjust path accordingly
+import { createExpense, updateExpense } from "../redux/slices/expenseSlice"; // Adjust path accordingly
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ existingExpense }) => {
   const [expenseData, setExpenseData] = useState({
     expenseName: "",
     amount: "",
@@ -13,8 +13,24 @@ const ExpenseForm = () => {
     date: new Date(),
   });
 
+  const [editMode, setEditMode] = useState(false);
+
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.expense); // Corrected the state reference
+  const { loading, error } = useSelector((state) => state.expense);
+
+  // If an existing expense is passed in, set it in the form
+  useEffect(() => {
+    if (existingExpense) {
+      setExpenseData({
+        expenseName: existingExpense.expenseName,
+        amount: existingExpense.amount,
+        category: existingExpense.category,
+        description: existingExpense.description,
+        date: new Date(existingExpense.date),
+      });
+      setEditMode(true); // Set edit mode to true
+    }
+  }, [existingExpense]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,11 +50,22 @@ const ExpenseForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Dispatch the createExpense action
-    const resultAction = await dispatch(createExpense(expenseData));
+    let resultAction;
+    if (editMode) {
+      resultAction = await dispatch(updateExpense(expenseData)); // Update expense
+    } else {
+      resultAction = await dispatch(createExpense(expenseData)); // Create expense
+    }
 
-    if (createExpense.fulfilled.match(resultAction)) {
-      alert("Expense added successfully!");
+    if (
+      createExpense.fulfilled.match(resultAction) ||
+      updateExpense.fulfilled.match(resultAction)
+    ) {
+      alert(
+        editMode
+          ? "Expense updated successfully!"
+          : "Expense added successfully!"
+      );
       setExpenseData({
         expenseName: "",
         amount: "",
@@ -48,7 +75,7 @@ const ExpenseForm = () => {
       });
     } else {
       alert(
-        "Failed to add expense: " +
+        "Failed to save expense: " +
           (resultAction.payload || resultAction.error.message)
       );
     }
@@ -56,23 +83,24 @@ const ExpenseForm = () => {
 
   return (
     <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-4">Add Expense</h2>
+      <h2 className="text-2xl font-bold mb-4">
+        {editMode ? "Update Expense" : "Add Expense"}
+      </h2>
       <div>
         {error && (
           <p className="text-red-500">
             {typeof error === "string" ? error : JSON.stringify(error)}
           </p>
-        )}{" "}
+        )}
       </div>
 
-      {/* Show error from expense slice */}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-sm font-medium">Expense Name</label>
           <input
             type="text"
-            name="expenseName" // Corrected name
-            value={expenseData.expenseName} // Corrected value
+            name="expenseName"
+            value={expenseData.expenseName}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
             required
@@ -95,7 +123,7 @@ const ExpenseForm = () => {
           <label className="block text-sm font-medium">Category</label>
           <input
             type="text"
-            name="category" // Fixed the incorrect 'source' to 'category'
+            name="category"
             value={expenseData.category}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
@@ -127,7 +155,11 @@ const ExpenseForm = () => {
           disabled={loading}
           className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600"
         >
-          {loading ? "Submitting..." : "Add Expense"}
+          {loading
+            ? "Submitting..."
+            : editMode
+            ? "Update Expense"
+            : "Add Expense"}
         </button>
       </form>
     </div>

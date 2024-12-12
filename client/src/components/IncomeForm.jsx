@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { createIncome } from "../redux/slices/incomeSlice"; // Adjust path accordingly
+import { createIncome, updateIncome } from "../redux/slices/incomeSlice"; // Adjust path accordingly
 
-const IncomeForm = () => {
+const IncomeForm = ({ existingIncomeData }) => {
   const [incomeData, setIncomeData] = useState({
     incomeName: "",
     amount: "",
@@ -15,6 +15,13 @@ const IncomeForm = () => {
 
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.income);
+
+  // If existingIncomeData is passed, populate the form for updating
+  useEffect(() => {
+    if (existingIncomeData) {
+      setIncomeData(existingIncomeData);
+    }
+  }, [existingIncomeData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,12 +40,24 @@ const IncomeForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let resultAction;
+    if (existingIncomeData) {
+      // Update income
+      resultAction = await dispatch(updateIncome(incomeData));
+    } else {
+      // Create new income
+      resultAction = await dispatch(createIncome(incomeData));
+    }
 
-    // Dispatch the createIncome action
-    const resultAction = await dispatch(createIncome(incomeData));
-
-    if (createIncome.fulfilled.match(resultAction)) {
-      alert("Income added successfully!");
+    if (
+      createIncome.fulfilled.match(resultAction) ||
+      updateIncome.fulfilled.match(resultAction)
+    ) {
+      alert(
+        existingIncomeData
+          ? "Income updated successfully!"
+          : "Income added successfully!"
+      );
       setIncomeData({
         incomeName: "",
         amount: "",
@@ -48,21 +67,25 @@ const IncomeForm = () => {
       });
     } else {
       alert(
-        "Failed to add income: " + resultAction.payload ||
-          resultAction.error.message
+        "Failed to " +
+          (existingIncomeData ? "update" : "add") +
+          " income: " +
+          resultAction.payload || resultAction.error.message
       );
     }
   };
 
   return (
     <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-4">Add Income</h2>
+      <h2 className="text-2xl font-bold mb-4">
+        {existingIncomeData ? "Update Income" : "Add Income"}
+      </h2>
       <div>
         {error && (
           <p className="text-red-500">
             {typeof error === "string" ? error : JSON.stringify(error)}
           </p>
-        )}{" "}
+        )}
       </div>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -125,7 +148,11 @@ const IncomeForm = () => {
           disabled={loading}
           className="w-full bg-violet-500 text-white py-2 rounded-md hover:bg-violet-600"
         >
-          {loading ? "Submitting..." : "Add Income"}
+          {loading
+            ? "Submitting..."
+            : existingIncomeData
+            ? "Update Income"
+            : "Add Income"}
         </button>
       </form>
     </div>

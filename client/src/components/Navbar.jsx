@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/slices/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -65,14 +65,14 @@ const Navbar = () => {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <Link to="/dashboard" className="hover:text-gray-300 text-lg">
-            Dashboard
-          </Link>
           <Link to="/income" className="hover:text-gray-300 text-lg">
             Income
           </Link>
           <Link to="/expense" className="hover:text-gray-300 text-lg">
             Expense
+          </Link>
+          <Link to="/dashboard" className="hover:text-gray-300 text-lg">
+            Dashboard
           </Link>
         </div>
 
@@ -102,14 +102,14 @@ const Navbar = () => {
           isMenuOpen ? "block" : "hidden"
         } bg-gray-800 text-white p-4 space-y-4`}
       >
-        <Link to="/home" className="block hover:text-gray-300">
-          Dashboard
-        </Link>
         <Link to="/income" className="block hover:text-gray-300">
           Income
         </Link>
         <Link to="/expense" className="block hover:text-gray-300">
           Expense
+        </Link>
+        <Link to="/home" className="block hover:text-gray-300">
+          Dashboard
         </Link>
       </div>
     </nav>
